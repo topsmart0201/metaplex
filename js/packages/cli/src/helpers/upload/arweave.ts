@@ -14,6 +14,7 @@ const ARWEAVE_UPLOAD_ENDPOINT =
 
 async function fetchAssetCostToStore(fileSizes: number[]) {
   const result = await calculate(fileSizes);
+  log.info(`fetchAssetCostToStore ${result}`);
   log.debug('Arweave cost estimates:', result);
 
   return result.solana * anchor.web3.LAMPORTS_PER_SOL;
@@ -21,6 +22,7 @@ async function fetchAssetCostToStore(fileSizes: number[]) {
 
 async function upload(data: FormData, manifest, index) {
   log.debug(`trying to upload ${index}.png: ${manifest.name}`);
+  log.info(`trying to upload ${index}.png: ${manifest.name}`);
   return await (
     await fetch(ARWEAVE_UPLOAD_ENDPOINT, {
       method: 'POST',
@@ -73,6 +75,7 @@ export async function arweaveUpload(
     manifestBuffer.length,
     estimatedManifestSize,
   ]);
+  log.info(`arweav upload starts ${storageCost}`);
   log.debug(`lamport cost to store ${image}: ${storageCost}`);
 
   const instructions = [

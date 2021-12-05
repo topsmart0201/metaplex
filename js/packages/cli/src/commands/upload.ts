@@ -136,6 +136,7 @@ export async function upload(
             }
 
             if (!link) {
+              log.info(`storage: ${storage}`);
               try {
                 if (storage === 'arweave') {
                   [link, imageLink] = await arweaveUpload(
